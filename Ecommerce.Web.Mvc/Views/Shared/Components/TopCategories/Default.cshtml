@@ -1,0 +1,51 @@
+﻿@{
+    GeneralConfigurationDto conGen = JsonSerializer.Deserialize<GeneralConfigurationDto>(K["GeneralConfiguration"])!;
+    var topCategories = ViewBag.TopCategories as IEnumerable<TopCategoriesConfigurationDto>;
+    var bannerList = ViewBag.BannerList as List<BannerDto>;
+}
+
+
+<div class="container my-4">
+    <div class="row align-items-stretch">
+        <div class="col-md-6">
+            <div class="row">
+                @if (bannerList?.Count() > 0)
+                {
+                    @foreach (var item in bannerList)
+                    {
+                        <div class="col-12">
+                            <div class="card border-radius-0 my-2 border-0 shadow-1" style="background-color: @item.BackgroundColorHexCode;color: @item.ColorHexCode">
+                                <div class="card-body height-200 p-3 p-md-5">
+                                    <span class="d-block fw-900 h-3 text-uppercase">@item?.Title</span>
+                                    <div>
+                                        <span class="d-block fw-600 h-7">@item?.SubTitle</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-md-6 h-100">
+            <div class="row">
+                @foreach (var item in topCategories!)
+                {
+                    <div class="col-12 col-lg-4 col-md-6">
+                        <a href="shop/@item.Slug" class="border-radius-0 card-bg-3 my-2 height-200 featured-category-item">
+                            <img alt="@item?.Title" src="@(item?.Image != null ? "/" + item.Image : "/assets/images/no-image.png")" class="featured-category-img" loading="lazy" decoding="async">
+                            <div class="featured-category-content" style="background: #ebdba4b8">
+                                <div class="p-2 lh-sm">
+                                    <span class="d-block fw-900 h-6 text-uppercase">@item?.Title</span>
+                                    <div>
+                                        <span class="d-block">Get All New Items</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

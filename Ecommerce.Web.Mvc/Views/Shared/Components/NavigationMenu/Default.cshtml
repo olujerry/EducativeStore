@@ -1,0 +1,43 @@
+﻿@{
+    var menusList = ViewBag.NavigationMenu as IEnumerable<NavMenuRenderViewModel>;
+    var profilePic = @User.FindFirstValue("ProfilePic");
+}
+
+<style>
+    .navigation-menu-profile-img {
+        height: 40%;
+        width: 40%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #e5b918;
+    }
+</style>
+
+
+<div class="text-center mt-5 mb-3 navigation-menu-profile">
+    <div class="mb-1">
+        @*<img class="navigation-menu-profile-img" src="/assets/images/no-image.png"/>*@
+        <a asp-controller="Profile" asp-action="Index" class="text-decoration-none"><img class="navigation-menu-profile-img" src="@(profilePic != null ? "/" + profilePic : "/assets/images/no-image.png")" /></a>
+    </div>
+    <div>
+        @*<span style="color: #e5b918; ">@User?.Identity?.Name</span>*@
+        <a asp-controller="Profile" asp-action="Index" class="text-decoration-none"><span style="color: #e5b918; ">@User.FindFirstValue("FullName")</span></a>
+    </div>
+</div>
+<div class="sb-sidenav-menu mb-5">
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Main</div>
+        <a class="nav-link" asp-controller="Dashboard" asp-action="Index"> <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> Dashboard</a>
+        <a class="nav-link" asp-controller="Home" asp-action="Index"> <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div> Home</a>
+
+        <div class="sb-sidenav-menu-heading">Interface</div>
+        @await Html.PartialAsync("_ChildMenuPartial", menusList)
+    </div>
+</div>
+
+
+@*<script>
+    const randomNumber = Math.floor(Math.random() * 8) + 1;
+    const imageElement = document.querySelector('.navigation-menu-profile-img');
+    imageElement.src = '/assets/images/profile/' + randomNumber +'.jpg';
+</script>*@

@@ -1,0 +1,66 @@
+﻿@{
+    GeneralConfigurationDto conGen = JsonSerializer.Deserialize<GeneralConfigurationDto>(K["GeneralConfiguration"])!;
+    var roles = User.GetRoles();
+}
+
+
+
+<div class="px-3 py-3">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-6">
+                <div class="text-start logo-area" style="font-size: 1.5em;">
+                    <a class="text-dark text-decoration-none fw-bolder" href="/">
+                        @if (conGen?.CompanyLogo != null)
+                        {
+                            <img src="/@conGen?.CompanyLogo" alt="logo" />
+                        }
+                        else
+                        {
+                            <span class="fw-700">@conGen?.CompanyName</span>
+                        }
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex flex-wrap justify-content-end align-items-end">
+                    <div class="me-3">
+                        <a aria-controls="offcanvasRight" class="nav-link cart_btn" data-bs-target="#offcanvasRight2" data-bs-toggle="offcanvas" href="javascript:void(0)">
+                            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                        </a>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="me-3">
+                            <a class="nav-link" asp-action="WishList" asp-controller="My">
+                                <i class="fa-regular fa-heart fa-lg"></i>
+                            </a>
+                        </div>
+                    }
+                    
+                    <div class="cart-area me-3">
+                        <a aria-controls="offcanvasRight" class="nav-link cart_btn" data-bs-target="#offcanvasRight" data-bs-toggle="offcanvas" href="javascript:void(0)">
+                            <i class="fa-solid fa-bag-shopping fa-lg"></i>
+                        </a>
+                        <div class="total-cart-count"><vc:cart-count></vc:cart-count></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div aria-labelledby="offcanvasRightLabel" class="offcanvas offcanvas-end cart-summary border-0" id="offcanvasRight" tabindex="-1">
+    <vc:cart-summary></vc:cart-summary>
+</div>
+
+<div aria-labelledby="offcanvasRightLabel" class="offcanvas offcanvas-end main-search w-100 border-0" id="offcanvasRight2" tabindex="-1">
+    <div class="offcanvas-header">
+        <span class="offcanvas-title text-uppercase fw-bold" id="offcanvasRightLabel2">Search</span>
+        <a aria-label="Close" class="text-decoration-none" data-bs-dismiss="offcanvas" href="#"><i class="fa-solid fa-xmark fa-xl text-danger"></i></a>
+    </div>
+    <div class="offcanvas-body">
+        <vc:global-search></vc:global-search>
+    </div>
+</div>
